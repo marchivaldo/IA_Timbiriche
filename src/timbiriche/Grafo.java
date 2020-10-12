@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 public class Grafo {
 	private LinkedList<Integer> adyacentes[];
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	Grafo(int tam) {
 		adyacentes = new LinkedList[tam];
@@ -33,4 +33,19 @@ public class Grafo {
 		return false;
 	}
 	
+	public int estanConectados2(int punto1, int punto2) {
+		Iterator<Integer> i = adyacentes[punto1].iterator();
+		while(i.hasNext()) {
+			int siguiente = i.next();
+			if(siguiente == punto2 )
+				return 1;
+		}
+		Iterator<Integer> j = adyacentes[punto2].iterator();
+		while(j.hasNext()) {
+			int siguiente = j.next();
+			if(siguiente == punto1)
+				return 1;
+		}
+		return 0;
+	}
 }

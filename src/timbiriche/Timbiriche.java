@@ -1,5 +1,6 @@
 package timbiriche;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Timbiriche {
@@ -123,6 +124,38 @@ public class Timbiriche {
 		return "Maquina";
 	}
 	
+	public static void maxMin(boolean fn) {
+		if(fn) {
+			maximizar();
+		}else {
+			minimizar();
+		}
+	}
+	
+	private static void minimizar() {
+		Random num = new Random();
+		int nuevoNodo = num.nextInt(25);
+			g.unir2Puntos(nuevoNodo, nuevoNodo+1);
+		
+	}
+	
+	public static void maximizar() {
+		for (int i = 0; i < 19; i++) {
+			if( g.estanConectados2(i, i+1) + g.estanConectados2(i+1, i+6) + g.estanConectados2(i, i+5) + g.estanConectados2(i+5, i+6) == 3) {
+				if(g.estanConectados(i, i+1) && g.estanConectados(i+1, i+6) && g.estanConectados(i,	i+5)) {
+					g.unir2Puntos(i+5, i+6); return;
+				}if(g.estanConectados(i, i+1) && g.estanConectados(i+1, i+6) && g.estanConectados(i+6, i+5)) {
+					g.unir2Puntos(i, i+5); return;
+				}if(g.estanConectados(i, i+1) && g.estanConectados(i, i+5) && g.estanConectados(i+5, i+6)) {
+					g.unir2Puntos(i+1, i+6); return;
+				}if(g.estanConectados(i, i+5) && g.estanConectados(i+5, i+6) && g.estanConectados(i+6, i+1)) {
+					g.unir2Puntos(i, i+1);
+				}
+			}
+		}
+		maxMin(false); 
+	}
+	
 	public static void main(String[] args) {
 		in = new Scanner(System.in);
 		boolean otroTurno = false;
@@ -134,15 +167,10 @@ public class Timbiriche {
 		imprimirCuadricula();
 		while(nTiros != 40) {
 			System.out.println("Turno para: " + turno);
-			if(turno == "U") {
+			if(turno == "M") {
 				//Turno para la máquina
-				System.out.println("Para unir dos puntos introduzca los números de los puntos.");
-				System.out.println("Punto 1: ");
-				int p1 = in.nextInt();
-				System.out.println("Punto 2: ");
-				int p2 = in.nextInt();
-				
-				g.unir2Puntos(p1, p2);
+				Random r = new Random();
+				maxMin(true);
 			} else {
 				//Turno para el usuario
 				System.out.println("Para unir dos puntos introduzca los números de los puntos.");
